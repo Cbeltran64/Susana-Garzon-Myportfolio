@@ -1,16 +1,11 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { getProjectBySlug } from '../data/projects';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { getProjectBySlug } from "../data/projects";
 
-/**
- * Página de detalle de proyecto.  Obtiene el slug de la URL y busca los
- * detalles en la base de datos.  En caso de no encontrar el proyecto,
- * muestra un mensaje.  Las imágenes y enlaces se podrían renderizar en
- * componentes separados cuando existan datos disponibles.
- */
 const ProjectPage = () => {
   const { slug } = useParams();
   const project = getProjectBySlug(slug);
+
   if (!project) {
     return (
       <section>
@@ -19,26 +14,13 @@ const ProjectPage = () => {
       </section>
     );
   }
+
   return (
     <section className="project">
       <h1 className="project__title">{project.title}</h1>
-      {project.year && <p className="project__year">Año: {project.year}</p>}
       <p className="project__description">{project.description}</p>
-      {/* Aquí podrían añadirse componentes para mostrar enlaces externos y galerías de imágenes */}
-      {project.links && project.links.length > 0 && (
-        <div className="project__links">
-          <h3>Enlaces:</h3>
-          <ul>
-            {project.links.map((link, index) => (
-              <li key={index}>
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+
+      {/* Galería de imágenes */}
       {project.images && project.images.length > 0 && (
         <div className="project__gallery">
           {project.images.map((src, index) => (
@@ -49,6 +31,51 @@ const ProjectPage = () => {
               className="project__image"
             />
           ))}
+        </div>
+      )}
+      {project.links && (
+        <div>
+          {project.figmaLinks && project.figmaLinks.length > 0 && (
+            <div className="project__figma-section">
+              <h2 className="project__section-title">Prototipos Interactivos</h2>
+              {project.figmaLinks.map((figma, index) => (
+                <div key={index} className="project__figma-container">
+                  <div className="project__figma-header">
+                    <h3 className="project__figma-title">{figma.title}</h3>
+                    <div className="project__figma-buttons">
+                      <a
+                        href={figma.directUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project__button project__button--figma"
+                      >
+                        {figma.botonNameFigma}
+                      </a>
+
+                      {figma.botonNameSite && (
+                        <a
+                          href={figma.linkSate}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project__button project__button--site"
+                        >
+                          {figma.botonNameSite}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  {figma.embedUrl && (
+                    <iframe
+                      className="project__figma-embed"
+                      src={figma.embedUrl}
+                      allowFullScreen
+                      title={figma.title}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </section>

@@ -10,8 +10,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      {/* El contenedor principal se rellena con las páginas */}
-      {children}
+        {children}
       <Footer />
     </>
   );
