@@ -1,57 +1,101 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { navData } from '../data/projects';
-import './Header.css';
+"use client"
 
-/**
- * Encabezado de la aplicación que muestra un menú horizontal con categorías y
- * subcategorías.  El menú es desplegable: al pasar el cursor sobre una
- * categoría se muestran sus proyectos.  La estructura de datos se toma de
- * navData.  El enlace "Contacto" se sitúa al final para mayor claridad.
- */
+import { useState } from "react"
+import { navData } from "../data/navData.ts"
+import "./Header.css"
+
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeSubmenu, setActiveSubmenu] = useState(null)
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    setActiveSubmenu(null)
+  }
+
+  const toggleSubmenu = (sectionId) => {
+    if (activeSubmenu === sectionId) {
+      setActiveSubmenu(null)
+    } else {
+      setActiveSubmenu(sectionId)
+    }
+  }
+
+  const handleNavClick = (path) => {
+    if (path.includes("#")) {
+      const sectionId = path.replace("/#", "")
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+      }
+    } else {
+      window.location.href = path
+    }
+    closeMenu()
+  }
+
   return (
     <header className="header">
       <div className="header__container">
-        {/* Marca o logo que enlaza a la página de inicio */}
-        <Link to="/" className="header__logo">
-          Susana Garzón
-        </Link>
-        <nav className="navbar">
+        {/* Logo */}
+        <button className="header__logo" onClick={() => handleNavClick("/")} title="Ir a inicio">
+          <img src="/logo.svg" alt="Susana Garzón UX/UI Designer" className="logo-image" />
+        </button>
+
+        {/* Botón del menú hamburguesa */}
+        <button
+          className={`header__toggle ${isMenuOpen ? "header__toggle--active" : ""}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav className={`navbar ${isMenuOpen ? "navbar--open" : ""}`}>
           <ul className="navbar__list">
-            {navData.map((section) => (
-              <li key={section.id} className="navbar__item">
-                <Link to={section.path} className="navbar__link">
-                  {section.title}
-                </Link>
-                {/* Submenú de proyectos */}
-                {section.items && section.items.length > 0 && (
-                  <ul className="submenu">
-                    {section.items.map((item) => (
-                      <li key={item.slug} className="submenu__item">
-                        <Link
-                          to={`${section.path}/${item.slug}`}
-                          className="submenu__link"
-                        >
-                          {item.title}
-                        </Link>
+            {/* Mapear items del navData */}
+            {navData.map((item) => (
+              <li key={item.id} className="navbar__item">
+                <div className="navbar__link-container">
+                  <button className="navbar__link" onClick={() => handleNavClick(item.path)}>
+                    {item.title}
+                  </button>
+                  {item.items && item.items.length > 0 && (
+                    <button
+                      className="navbar__submenu-toggle"
+                      onClick={() => toggleSubmenu(item.id)}
+                      aria-label="Toggle submenu"
+                    >
+                      <span>{activeSubmenu === item.id ? "−" : "▾"}</span>
+                    </button>
+                  )}
+                </div>
+
+                {/* Submenú del Portafolio */}
+                {item.items && item.items.length > 0 && (
+                  <ul className={`submenu ${activeSubmenu === item.id ? "submenu--open" : ""}`}>
+                    {item.items.map((subitem) => (
+                      <li key={subitem.slug} className="submenu__item">
+                        <button className="submenu__link" onClick={() => handleNavClick(`/${subitem.slug}`)}>
+                          {subitem.title}
+                        </button>
                       </li>
                     ))}
                   </ul>
                 )}
               </li>
             ))}
-            {/* Item de contacto fuera de la lista de secciones */}
-            <li className="navbar__item">
-              <Link to="/contacto" className="navbar__link">
-                Contacto
-              </Link>
-            </li>
           </ul>
         </nav>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

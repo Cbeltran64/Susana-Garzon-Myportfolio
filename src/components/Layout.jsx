@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import './Layout.css'; // Crearemos este archivo
 
 /**
  * Componente de diseño que incluye el encabezado y pie de página.
@@ -8,11 +9,13 @@ import Footer from './Footer';
  */
 const Layout = ({ children }) => {
   return (
-    <>
+    <div className="layout">
       <Header />
+      <main className="layout__main">
         {children}
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
