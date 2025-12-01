@@ -8,19 +8,19 @@ export const navData = [
   {
     id: "portafolio",
     title: "Portafolio",
-    path: "",
+    path: "/portafolio",
     items: [
       {
         title: "Diseño UX/UI",
-        slug: "/ux-ui",
+        slug: "ux-ui",
       },
       {
         title: "Redes Sociales",
-        slug: "/redes-sociales",
+        slug: "redes-sociales",
       },
       {
         title: "Diseño para impresión",
-        slug: "/diseno-impresion",
+        slug: "diseno-impresion",
       },
     ],
   },
@@ -28,12 +28,6 @@ export const navData = [
     id: "sobre-mi",
     title: "Sobre mí",
     path: "/#sobre-mi",
-    items: [],
-  },
-  {
-    id: "trabajemos",
-    title: "¿Trabajamos juntos?",
-    path: "/#contacto",
     items: [],
   },
 ]

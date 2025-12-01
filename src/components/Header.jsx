@@ -17,12 +17,8 @@ const Header = () => {
     setActiveSubmenu(null)
   }
 
-  const toggleSubmenu = (sectionId) => {
-    if (activeSubmenu === sectionId) {
-      setActiveSubmenu(null)
-    } else {
-      setActiveSubmenu(sectionId)
-    }
+  const toggleSubmenu = (itemId) => {
+    setActiveSubmenu(activeSubmenu === itemId ? null : itemId)
   }
 
   const handleNavClick = (path) => {
@@ -46,53 +42,72 @@ const Header = () => {
           <img src="/logo.svg" alt="Susana Garzón UX/UI Designer" className="logo-image" />
         </button>
 
-        {/* Botón del menú hamburguesa */}
+        {/* Botón del menú hamburguesa (móvil) */}
         <button
           className={`header__toggle ${isMenuOpen ? "header__toggle--active" : ""}`}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <img src="/iconoMenu.png" alt="Menú" className="header__toggle-icon" />
         </button>
 
+        {/* Navegación central */}
         <nav className={`navbar ${isMenuOpen ? "navbar--open" : ""}`}>
           <ul className="navbar__list">
-            {/* Mapear items del navData */}
             {navData.map((item) => (
               <li key={item.id} className="navbar__item">
-                <div className="navbar__link-container">
-                  <button className="navbar__link" onClick={() => handleNavClick(item.path)}>
+                {item.items && item.items.length > 0 ? (
+                  <>
+                    <button 
+                      className="navbar__link"
+                      onClick={() => toggleSubmenu(item.id)}
+                    >
+                      {item.title}
+                      <span className="navbar__arrow">▾</span>
+                    </button>
+                    
+                    {/* Submenú desplegable */}
+                    <ul className={`submenu ${activeSubmenu === item.id ? "submenu--open" : ""}`}>
+                      {item.items.map((subitem) => (
+                        <li key={subitem.slug} className="submenu__item">
+                          <button 
+                            className="submenu__link" 
+                            onClick={() => handleNavClick(`/${subitem.slug}`)}
+                          >
+                            {subitem.title}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <button 
+                    className="navbar__link" 
+                    onClick={() => handleNavClick(item.path)}
+                  >
                     {item.title}
                   </button>
-                  {item.items && item.items.length > 0 && (
-                    <button
-                      className="navbar__submenu-toggle"
-                      onClick={() => toggleSubmenu(item.id)}
-                      aria-label="Toggle submenu"
-                    >
-                      <span>{activeSubmenu === item.id ? "−" : "▾"}</span>
-                    </button>
-                  )}
-                </div>
-
-                {/* Submenú del Portafolio */}
-                {item.items && item.items.length > 0 && (
-                  <ul className={`submenu ${activeSubmenu === item.id ? "submenu--open" : ""}`}>
-                    {item.items.map((subitem) => (
-                      <li key={subitem.slug} className="submenu__item">
-                        <button className="submenu__link" onClick={() => handleNavClick(`/${subitem.slug}`)}>
-                          {subitem.title}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
                 )}
               </li>
             ))}
           </ul>
+
+          {/* Botón CTA dentro del menú móvil */}
+          <button 
+            className="navbar__cta-button" 
+            onClick={() => handleNavClick("/#contacto")}
+          >
+            ¿Trabajamos juntos?
+          </button>
         </nav>
+
+        {/* Botón CTA desktop (a la derecha) */}
+        <button 
+          className="navbar__cta-button navbar__cta-button--desktop" 
+          onClick={() => handleNavClick("/#contacto")}
+        >
+          ¿Trabajamos juntos?
+        </button>
       </div>
     </header>
   )

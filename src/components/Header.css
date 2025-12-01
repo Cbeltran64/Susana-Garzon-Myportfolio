@@ -4,7 +4,7 @@
   top: 0;
   z-index: 1000;
   background-color: #ffffff;
-  /* Removida la línea azul inferior */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .header__container {
@@ -14,10 +14,10 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 1rem 2rem;
-  position: relative;
+  gap: 2rem;
 }
 
-/* Logo Styles - CHANGE: Updated for SVG image only */
+/* Logo - Izquierda */
 .header__logo {
   background: none;
   border: none;
@@ -25,8 +25,8 @@
   padding: 0;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   transition: opacity 0.2s ease;
+  flex-shrink: 0;
 }
 
 .header__logo:hover {
@@ -39,79 +39,40 @@
   display: block;
 }
 
-.logo-circle {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #7c5aff 0%, #2196f3 100%);
-  flex-shrink: 0;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  font-family: "Poppins", sans-serif;
-}
-
-.logo-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #1a1a1a;
-  line-height: 1.2;
-}
-
-.logo-subtitle {
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  color: #666;
-}
-
-/* Botón del menú hamburguesa */
+/* Botón del menú hamburguesa (móvil) */
 .header__toggle {
   display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 18px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   z-index: 1001;
+  width: 32px;
+  height: 32px;
 }
 
-.header__toggle span {
-  display: block;
-  height: 2px;
+.header__toggle-icon {
   width: 100%;
-  background-color: #333;
-  transition: all 0.3s ease;
-  transform-origin: center;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
-.header__toggle--active span:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
+.header__toggle--active .header__toggle-icon {
+  transform: rotate(90deg);
 }
 
-.header__toggle--active span:nth-child(2) {
-  opacity: 0;
-}
-
-.header__toggle--active span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
-}
-
-/* Navbar Styles */
+/* Navbar - Centro */
 .navbar {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .navbar__list {
   display: flex;
-  gap: 3rem;
+  gap: 2.5rem;
   align-items: center;
   list-style: none;
   margin: 0;
@@ -123,17 +84,13 @@
   position: relative;
 }
 
-.navbar__link-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .navbar__link {
   padding: 0.5rem 0;
   font-size: 1rem;
   font-weight: 500;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   transition: color 0.2s ease;
   background: none;
   border: none;
@@ -143,77 +100,43 @@
 }
 
 .navbar__link:hover {
-  /* Cambio de color a púrpura #5E3BEE */
   color: #5e3bee;
 }
 
-/* Botón para abrir/cerrar submenú en móvil */
-.navbar__submenu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0.25rem;
-  color: #666;
-  transition: color 0.2s ease;
+.navbar__arrow {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
 }
 
-.navbar__submenu-toggle:hover {
-  /* Cambio de color a púrpura #5E3BEE */
-  color: #5e3bee;
+.navbar__item:hover .navbar__arrow {
+  transform: rotate(180deg);
 }
 
-/* CTA button styles for "¿Trabajamos juntos?" */
-.navbar__cta-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #ffffff;
-  /* Cambio de borde a púrpura #5E3BEE y fuente Poppins */
-  border: 2px solid #5e3bee;
-  color: #5e3bee;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  margin-left: auto;
-  font-family: "Poppins", sans-serif;
-}
-
-.navbar__cta-button:hover {
-  /* Hover: fondo púrpura con texto blanco */
-  background-color: #5e3bee;
-  color: #ffffff;
-  border-color: #5e3bee;
-}
-
-/* Estilos del submenú (desplegable) */
+/* Submenú desplegable */
 .submenu {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #ffffff;
   border: 1px solid #e5e5e5;
+  border-radius: 8px;
   min-width: 220px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
   list-style: none;
   margin: 0;
-  padding: 0;
-  margin-top: 0.5rem;
+  padding: 0.5rem 0;
   font-family: "Poppins", sans-serif;
 }
 
-/* Mostrar el submenú cuando el usuario pasa el cursor */
-.navbar__item:hover > .submenu,
-.navbar__item:focus-within > .submenu {
+.submenu--open {
   opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
 .submenu__item {
@@ -226,7 +149,7 @@
 
 .submenu__link {
   display: block;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
   font-size: 0.95rem;
   transition: background-color 0.2s ease, color 0.2s ease;
   background: none;
@@ -239,21 +162,60 @@
 }
 
 .submenu__link:hover {
-  background-color: #f5f5f5;
-  /* Cambio de color hover a púrpura #5E3BEE */
+  background-color: #f8f6ff;
   color: #5e3bee;
 }
 
-/* ===== ESTILOS RESPONSIVE ===== */
-@media (max-width: 768px) {
+/* Botón CTA - Derecha */
+.navbar__cta-button {
+  padding: 0.75rem 1.75rem;
+  background-color: #ffffff;
+  border: 2px solid #5e3bee;
+  color: #5e3bee;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+  flex-shrink: 0;
+}
+
+.navbar__cta-button:hover {
+  background-color: #5e3bee;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(94, 59, 238, 0.3);
+}
+
+/* Mostrar botón CTA solo en desktop */
+.navbar__cta-button--desktop {
+  display: block;
+}
+
+/* Ocultar botón CTA dentro del navbar en desktop */
+.navbar .navbar__cta-button {
+  display: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 968px) {
   .header__container {
     padding: 1rem 1.5rem;
   }
 
+  /* Mostrar botón hamburguesa */
   .header__toggle {
-    display: flex;
+    display: block;
   }
 
+  /* Ocultar botón CTA de desktop */
+  .navbar__cta-button--desktop {
+    display: none;
+  }
+
+  /* Navbar móvil - pantalla completa */
   .navbar {
     position: fixed;
     top: 0;
@@ -261,10 +223,14 @@
     width: 100%;
     height: 100vh;
     background-color: #ffffff;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    padding: 5rem 1.5rem 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 5rem 2rem 2rem;
     overflow-y: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
   }
 
   .navbar--open {
@@ -275,71 +241,71 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
+    width: 100%;
   }
 
   .navbar__item {
     width: 100%;
-    border-bottom: 1px solid #f5f5f5;
-  }
-
-  .navbar__link-container {
-    width: 100%;
-    justify-content: space-between;
-    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0;
   }
 
   .navbar__link {
-    padding: 0;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .navbar__arrow {
     font-size: 1rem;
   }
 
-  .navbar__submenu-toggle {
-    display: block;
-  }
-
-  /* CTA button styles for mobile */
-  .navbar__cta-button {
-    margin-left: 0;
-    margin-top: 1.5rem;
-    width: 100%;
-    padding: 0.75rem 1rem;
-  }
-
-  /* Submenú en móvil */
+  /* Submenú móvil */
   .submenu {
     position: static;
     width: 100%;
     box-shadow: none;
     border: none;
-    border-top: 1px solid #f5f5f5;
-    opacity: 0;
+    border-radius: 0;
+    transform: none;
     max-height: 0;
     overflow: hidden;
-    transform: none;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
-    margin-top: 0;
+    padding: 0;
+    margin: 0;
+    background-color: #f8f8f8;
+    transition: max-height 0.3s ease;
   }
 
   .submenu--open {
-    opacity: 1;
     max-height: 500px;
-    pointer-events: auto;
+    padding: 0.5rem 0;
   }
 
   .submenu__item {
-    border-bottom: 1px solid #f9f9f9;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .submenu__item:last-child {
+    border-bottom: none;
   }
 
   .submenu__link {
-    padding: 0.75rem 0;
-    padding-left: 1rem;
-    font-size: 0.95rem;
+    padding: 1rem 0;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    font-weight: 400;
   }
 
-  /* Ocultar submenú con hover en móvil */
-  .navbar__item:hover > .submenu {
-    opacity: 0;
-    pointer-events: none;
+  /* Mostrar botón CTA dentro del menú móvil */
+  .navbar .navbar__cta-button {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
 }
 
@@ -348,20 +314,22 @@
     padding: 1rem;
   }
 
-  .navbar {
-    padding: 4rem 1rem 2rem;
-  }
-
-  .navbar__list {
-    gap: 0;
-  }
-
   .logo-image {
     height: 40px;
   }
 
-  .logo-circle {
-    width: 40px;
-    height: 40px;
+  .navbar {
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .navbar__link {
+    font-size: 1rem;
+    padding: 1rem 0;
+  }
+
+  .submenu__link {
+    padding: 0.875rem 0;
+    padding-left: 1.5rem;
+    font-size: 0.95rem;
   }
 }
