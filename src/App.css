@@ -214,6 +214,77 @@ img, video, iframe, canvas, svg {
   display: block;
 }
 
+/* ============================= */
+/* RESPONSIVE SECTION PAGE */
+/* ============================= */
+
+@media (max-width: 1024px) {
+  .section__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  section.section {
+    padding: 1.5rem 1rem;
+  }
+
+  .section__title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .project__description {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .section__grid {
+    grid-template-columns: 1fr; /* 👈 UNA SOLA COLUMNA */
+    gap: 1.25rem;
+  }
+
+  .section__card {
+    border-radius: 10px;
+  }
+
+  .section__card-title {
+    font-size: 1.1rem;
+  }
+
+  .section__button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section__title {
+    font-size: 1.35rem;
+  }
+
+  .project__description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .section__card-content {
+    padding: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .section__card-content {
+    position: relative;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .section__card {
+    min-height: auto;
+  }
+}
+
 /* Estilos para la página de proyecto */
 .project__title {
   font-size: 2rem;
@@ -261,94 +332,6 @@ img, video, iframe, canvas, svg {
   height: auto;
   object-fit: cover;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Estilos para la página de contacto */
-.contact__title {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.contact__intro {
-  margin-bottom: 1.5rem;
-}
-
-.contact__success-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
-  text-align: center;
-}
-
-.contact__success-text {
-  background-color: #e6f7ff;
-  border: 1px solid #b3e0ff;
-  color: #0059c1;
-  padding: 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.contact__form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 640px;
-  width: 100%;
-}
-
-.contact__field label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-weight: 500;
-}
-
-.contact__field input,
-.contact__field textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: border-color 0.2s ease;
-  max-width: 100%;
-}
-
-.contact__field input:focus,
-.contact__field textarea:focus {
-  outline: none;
-  border-color: #0070f3;
-}
-
-.contact__field input:disabled,
-.contact__field textarea:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
-}
-
-.contact__submit {
-  align-self: flex-start;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 4px;
-  background-color: #0070f3;
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.contact__submit:hover:not(:disabled) {
-  background-color: #0059c1;
-}
-
-.contact__submit:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
 }
 
 /* Sección de Figma */

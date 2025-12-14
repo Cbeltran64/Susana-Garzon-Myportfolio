@@ -1,111 +1,361 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { navData } from '../data/projects';
+import { useState } from "react"
+import "./Home.css"
+import { Link } from "react-router-dom";
 
-/**
- * Página de inicio del portafolio.  Muestra una breve introducción y un
- * listado de secciones principales con botones para explorarlas.  Incluye
- * también un enlace directo a la página de contacto.
- */
-const HomePage = () => {
+export default function HomePage() {
+
+  const handleDownloadCV = () => {
+    const link = document.createElement("a")
+    link.href = "/document/RENTA2024.pdf"
+    link.download = "Susana_Garzon_CV.pdf"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Estados del formulario
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  // Manejadores del formulario
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', '10a22d86-67ae-4839-b5dc-6c41cafa922f');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('subject', 'Nuevo mensaje de contacto desde tu portfolio');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFormData({ name: '', email: '', message: '' });
+        setShowToast(true);
+
+        // Ocultar el toast después de 5 segundos
+        setTimeout(() => {
+          setShowToast(false);
+        }, 5000);
+      } else {
+        console.error('Error al enviar el formulario:', data);
+        alert('Error al enviar el mensaje. Por favor, intenta nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error de conexión. Por favor, intenta nuevamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="home-page">
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-white to-gray-50 py-24 px-6">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Diseñadora UX/UI,</h1>
-          <h2 className="text-4xl font-bold text-blue-600 mb-8">Creadora de experiencias digitales</h2>
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-            Mis experiencias digitales basadas en investigación, usabilidad y diseño visual. Cada proyecto combina
-            estrategia, creatividad y validación con usuarios.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <button className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors">
-              Ver portafolio
-            </button>
-            <button className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors">
-              Descargar CV
-            </button>
+      <section className="hero-section">
+        <div className="hero-container">
+          <div className="hero-content">
+            <p className="hero-greeting">Hola, soy Susana</p>
+            <h1 className="hero-title">
+              <span className="hero-title-purple">Diseñadora UX/UI,</span>
+              <br />
+              Creadora de
+              <br />
+              experiencias digitales
+            </h1>
+            <p className="hero-description">
+              Creo experiencias digitales basadas en investigación, usabilidad y diseño visual. Cada proyecto combina
+              estrategia, creatividad y validación con usuarios para generar soluciones funcionales y estéticas.
+            </p>
+            <div className="hero-buttons">
+              <Link to="/portfolio" className="btn-primary">
+                Ver portafolio
+                <img src="/images/home/arrow_right_alt.png" alt="arrow" />
+              </Link>
+              <button className="btn-secondary" onClick={handleDownloadCV}>
+                <img src="/images/home/download.png" alt="download-icon" />
+                Descargar CV
+              </button>
+            </div>
+          </div>
+          <div className="hero-image">
+            <img src="/images/home/image1.png" alt="Susana Garzón" className='presentation-home' />
           </div>
         </div>
       </section>
 
       {/* Mi Expertise Section */}
-      <section className="bg-black py-24 px-6">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">Mi Expertise</h2>
-          <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-            Servicios que ofrezco para llevar tus proyectos al siguiente nivel
-          </p>
+      <section className="expertise-section">
+        <div className="expertise-container">
+          <p className="section-label">Mis habilidades</p>
+          <h2 className="section-title">Mi Expertise</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: "🎯", title: "Estrategia y Dirección UX", desc: "Definición de estrategia de diseño" },
-              { icon: "✏️", title: "Branding e Identidad Visual", desc: "Creación de identidades visuales" },
-              { icon: "📱", title: "Diseño de Producto Digital", desc: "Desarrollo de interfaces y UX" },
-              { icon: "🎨", title: "Diseño Visual y Prototipado", desc: "Creación y validación de diseños" },
-            ].map((item, i) => (
-              <div key={i} className="bg-white p-6 rounded-lg hover:shadow-lg transition-shadow">
-                <div className="text-4xl mb-3">{item.icon}</div>
-                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
+          <div className="expertise-grid">
+            <div className="expertise-card">
+              <div className="expertise-icon">
+                <img src="/images/home/Strategy&Direction.png" alt="Strategy icon" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="sobre-mi" className="py-24 px-6 bg-gradient-to-br from-gray-50 to-white">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">Sobre mí</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="bg-gradient-to-br from-purple-400 to-blue-400 h-96 rounded-lg"></div>
-            <div>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Soy una diseñadora UX/UI apasionada por crear experiencias digitales significativas. Mi enfoque combina
-                investigación profunda, principios de usabilidad y diseño visual cautivador.
+              <h3 className="expertise-card-title">Estrategia y Dirección UX</h3>
+              <p className="expertise-card-description">
+                Creo estrategias digitales centradas en el usuario, integrando principios de UX y Design Thinking para
+                definir objetivos, mapear flujos y guiar proyectos hacia soluciones efectivas y validadas.
               </p>
-              <p className="text-gray-600 leading-relaxed">
-                Con años de experiencia trabajando con startups y empresas establecidas, he aprendido que el diseño real
-                es invisible—funciona porque entiende a los usuarios.
+            </div>
+
+            <div className="expertise-card">
+              <div className="expertise-icon">
+                <img src="/images/home/Branding&Logo.png" alt="Branding icon" />
+              </div>
+              <h3 className="expertise-card-title">Branding e Identidad Visual</h3>
+              <p className="expertise-card-description">
+                Desarrollo identidades visuales coherentes y funcionales, creando piezas gráficas estratégicas que
+                fortalecen la comunicación y elevan la experiencia de marca.
+              </p>
+            </div>
+
+            <div className="expertise-card">
+              <div className="expertise-icon">
+                <img src="/images/home/UI&UXDesign.png" alt="Product Design icon" />
+              </div>
+              <h3 className="expertise-card-title">Diseño de Producto Digital (UI/UX)</h3>
+              <p className="expertise-card-description">
+                Diseño interfaces intuitivas y accesibles para web y mobile bajo un enfoque Mobile First. Domino
+                wireframes, prototipos, arquitectura de información y pruebas con usuarios para optimizar navegación y
+                usabilidad.
+              </p>
+            </div>
+
+            <div className="expertise-card">
+              <div className="expertise-icon">
+                <img src="/images/home/WebflowDevelopment.png" alt="Visual Design icon" />
+              </div>
+              <h3 className="expertise-card-title">Diseño Visual y Prototipado</h3>
+              <p className="expertise-card-description">
+                Desarrollo soluciones digitales desde la idea hasta el prototipo final, integrando investigación,
+                arquitectura de información, diseño visual y usabilidad para crear productos funcionales y escalables.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="bg-gradient-to-r from-blue-600 to-purple-600 py-24 px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">¿Trabajamos juntos?</h2>
-          <p className="text-blue-100 mb-12 text-lg leading-relaxed">
-            Estoy disponible para nuevos proyectos. Envíame un mensaje y conectemos para crear algo increíble juntos.
-          </p>
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Tu nombre"
-              className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500"
-            />
-            <input
-              type="email"
-              placeholder="Tu email"
-              className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500"
-            />
-            <textarea
-              placeholder="Tu mensaje"
-              rows={4}
-              className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500"
-            ></textarea>
-            <button className="w-full px-6 py-3 bg-white text-blue-600 font-bold rounded-md hover:bg-blue-50 transition-colors">
-              Enviar mensaje
-            </button>
-          </form>
+      {/* Sobre mí Section */}
+      <section id="sobre-mi" className="about-section">
+        <div className="about-container">
+          <div className="about-content">
+            <div className="about-image-wrapper">
+              <img src="/images/home/sobremi.png" alt="Sobre mí" className='imagen-sobremi' />
+            </div>
+            <div className="about-text">
+              <p className="section-label-center">Conoce</p>
+              <h2 className="section-title-center">Sobre mí</h2>
+              <p>
+                Soy una diseñadora UX/UI con más de siete años de experiencia en diseño visual y dos años creando productos digitales para sectores como salud, educación, estética, deportes y contract. Me caracterizo por unir sensibilidad estética con pensamiento estructurado: diseño interfaces funcionales, intuitivas y con intención.
+              </p>
+              <p>
+                A lo largo de mi experiencia, he trabajado en proyectos que requieren investigación, conceptualización, arquitectura de información, prototipado y validación con usuarios. Me gusta entender cómo piensan las personas, qué necesitan y cómo puedo traducir eso en productos claros, útiles y visualmente coherentes.
+              </p>
+              <p>
+                Trabajo con herramientas como Figma, Adobe XD, Illustrator y Photoshop, y tengo conocimientos base en HTML, CSS y JavaScript, lo que me permite diseñar pensando en la implementación real.
+              </p>
+              <p>
+                Soy una persona curiosa, detallista y creativa. Me inspiran los colores, las texturas, las personas y las buenas historias. Me gusta diseñar experiencias que no solo funcionen, sino que también transmitan algo lindo y humano.
+              </p>
+              <p>
+                Actualmente me enfoco en crecer como diseñadora de producto digital, fortaleciendo mis habilidades en UX, UI y validación con usuarios, mientras sigo explorando nuevas formas de crear experiencias significativas.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
-    </div>
-  );
-};
 
-export default HomePage;
+      {/* Mi Portafolio Section */}
+      <section className="portfolio-section">
+        <div className="portfolio-container">
+          <div className="portfolio-header">
+            <div className="fportfolio-header-pro">
+              <div>
+                <p className="section-label2">Proyectos recientes de</p>
+                <h2 className="section-title2">Mi Portafolio</h2>
+              </div>
+              <a
+                href="https://www.linkedin.com/in/susanagarzon-uxuidesign/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-linkedin"
+                style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+              >
+                <img src="/images/home/Group.png" alt="linkedin" />
+                Visita mi LinkedIn
+              </a>
+            </div>
+          </div>
+
+          <div className="portfolio-grid">
+            <div className="portfolio-card">
+              <div className="portfolio-image">
+                <img src="../images/Diseño-UX-UI/Sistema-de-Landings/Diseño UX UI-Sistema de Landings.jpg" alt="Ahuse project" />
+              </div>
+              <h3 className="portfolio-card-title">Valencia ™ Biosense Landing Page prototipo</h3>
+              <p className="portfolio-card-description">
+                Lo que comenzó como una landing puntual se convirtió en un sistema UX/UI escalable para gestionar más de 10 colecciones de telas en distintos mercados...
+              </p>
+              <a href="/ux-ui/sistema-de-landings" className="portfolio-link">
+                Explorar proyecto <span className="arrow">↗</span>
+              </a>
+            </div>
+
+            <div className="portfolio-card">
+              <div className="portfolio-image">
+                <img src="/imagen4.png" alt="App Dashboard project" />
+              </div>
+              <h3 className="portfolio-card-title">App Dashboard</h3>
+              <p className="portfolio-card-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
+              </p>
+              <a href="/ux-ui/sistema-de-landings" className="portfolio-link">
+                Explorar proyecto <span className="arrow">↗</span>
+              </a>
+            </div>
+
+            <div className="portfolio-card">
+              <div className="portfolio-image">
+                <img src="/imagen5.png" alt="Easy Rent project" />
+              </div>
+              <h3 className="portfolio-card-title">Easy Rent</h3>
+              <p className="portfolio-card-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
+              </p>
+              <a href="#" className="portfolio-link">
+                Explorar proyecto <span className="arrow">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trabajemos juntos Section */}
+      <article id="trabajemos-juntos" className="contact-section">
+        {/* Imagen decorativa izquierda */}
+        <div className="contact-decoration-left">
+          <img src="/images/home/contacto1.png" alt="" />
+        </div>
+
+        {/* Imagen decorativa derecha */}
+        <div className="contact-decoration-right">
+          <img src="/images/home/contacto4.png" alt="" />
+        </div>
+
+        {/* Imagen decorativa de arriba */}
+        <div className="contact-decoration-top">
+          <img src="/images/home/contac33.png" alt="" />
+        </div>
+
+        <div className="contact-container">
+          <div className="contact-content">
+            <div className="contact-info">
+              <h2 className="contact-title">¿Trabajamos juntos?</h2>
+              <p className="contact-description">
+                Estoy abierta a nuevas oportunidades, proyectos freelance o colaboraciones. Si quieres crear algo
+                increíble, puedes escribirme aquí:
+              </p>
+              <div className="contact-details">
+                <div className="contact-item">
+                  <img src="/images/home/phone.png" alt="phone" />
+                  <span>+57 300 680 3863</span>
+                </div>
+                <div className="contact-item">
+                  <img src="/images/home/Email.png" alt="phone" />
+                  <span>vsusana@gmail.com</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-form-wrapper">
+              <h3 className="form-title">Enviar un mensaje</h3>
+
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Nombre"
+                  className="form-input"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="form-input"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                />
+                <textarea
+                  name="message"
+                  placeholder="Tu mensaje"
+                  rows={6}
+                  className="form-textarea"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                ></textarea>
+                <button
+                  type="submit"
+                  className="form-submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+                </button>
+              </form>
+
+              {/* Toast de confirmación */}
+              {showToast && (
+                <div className="toast">
+                  <div className="toast-content">
+                    <span className="toast-icon">✓</span>
+                    <div className="toast-text">
+                      <strong>¡Gracias por tu mensaje!</strong>
+                      <p>Me pondré en contacto contigo pronto.</p>
+                    </div>
+                    <button
+                      className="toast-close"
+                      onClick={() => setShowToast(false)}
+                      aria-label="Cerrar"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  )
+}

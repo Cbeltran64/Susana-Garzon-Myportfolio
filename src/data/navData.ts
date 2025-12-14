@@ -20,7 +20,7 @@ export const navData = [
       },
       {
         title: "Diseño para impresión",
-        slug: "diseno-impresion",
+        slug: "impresion",
       },
     ],
   },

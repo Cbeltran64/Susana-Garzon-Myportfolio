@@ -4,7 +4,7 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import SectionPage from './pages/SectionPage';
 import ProjectPage from './pages/ProjectPage';
-import ContactPage from './pages/ContactPage';
+import Portfolio from "./pages/Portfolio";
 
 /**
  * Componente principal de la aplicación.
@@ -44,8 +44,7 @@ function App() {
             path="/impresion/:slug"
             element={<ProjectPage sectionId="impresion" />}
           />
-          {/* Página de contacto */}
-          <Route path="/contacto" element={<ContactPage />} />
+          <Route path="/portfolio" element={<Portfolio />} />
         </Routes>
       </Layout>
     </Router>

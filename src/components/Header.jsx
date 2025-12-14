@@ -95,7 +95,7 @@ const Header = () => {
           {/* Botón CTA dentro del menú móvil */}
           <button 
             className="navbar__cta-button" 
-            onClick={() => handleNavClick("/#contacto")}
+            onClick={() => handleNavClick("/#trabajemos-juntos")}
           >
             ¿Trabajamos juntos?
           </button>
@@ -104,7 +104,7 @@ const Header = () => {
         {/* Botón CTA desktop (a la derecha) */}
         <button 
           className="navbar__cta-button navbar__cta-button--desktop" 
-          onClick={() => handleNavClick("/#contacto")}
+          onClick={() => handleNavClick("/#trabajemos-juntos")}
         >
           ¿Trabajamos juntos?
         </button>

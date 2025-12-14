@@ -183,7 +183,7 @@
 }
 
 .navbar__cta-button:hover {
-  background-color: #5e3bee;
+  background: linear-gradient(135deg, #5e3bee 0%, #7c3aed 100%);
   color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(94, 59, 238, 0.3);
