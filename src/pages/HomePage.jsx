@@ -280,7 +280,7 @@ export default function HomePage() {
               </p>
               <div className="contact-details">
                 <div className="contact-item">
-                  <img src="/images/home/phone.png" alt="phone" />
+                  <img src="/images/home/Phone.png" alt="phone" />
                   <span>+57 300 680 3863</span>
                 </div>
                 <div className="contact-item">
