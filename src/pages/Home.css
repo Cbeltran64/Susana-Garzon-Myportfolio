@@ -161,7 +161,10 @@
 .arrow {
   font-size: 18px;
 }
-
+.Vector {
+  width: 14px;
+  height: auto;
+}
 .download-icon {
   font-size: 18px;
 }
@@ -797,6 +800,29 @@
 
   .contact-content {
     padding: 24px;
+    border: none;
+  }
+  .contact-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 0px; 
+  background:
+    linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #ffffff 0%,
+      #0F103F 0%,
+      #0F103F 0%
+    ),
+    linear-gradient(
+      to right,
+      #ffffff 0%,
+      #ffffff 0%,
+      #0F103F 0%,
+      #0F103F 0%
+    );
   }
 
   .contact-title {

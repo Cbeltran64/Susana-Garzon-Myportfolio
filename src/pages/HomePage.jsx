@@ -215,38 +215,38 @@ export default function HomePage() {
               <div className="portfolio-image">
                 <img src="../images/Diseño-UX-UI/Sistema-de-Landings/Diseño UX UI-Sistema de Landings.jpg" alt="Ahuse project" />
               </div>
-              <h3 className="portfolio-card-title">Valencia ™ Biosense</h3>
+              <h3 className="portfolio-card-title">Sistema de landings</h3>
               <p className="portfolio-card-description">
                 Lo que comenzó como una landing puntual se convirtió en un sistema UX/UI escalable para gestionar ...
               </p>
               <a href="/ux-ui/sistema-de-landings" className="portfolio-link">
-                Explorar proyecto <span className="arrow">↗</span>
+                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector"/>
               </a>
             </div>
 
             <div className="portfolio-card">
               <div className="portfolio-image">
-                <img src="/imagen4.png" alt="App Dashboard project" />
+                <img src="../images/Diseño-UX-UI/Work-With-US/Diseño UX UI-Work With US.jpg" alt="App Dashboard project" />
               </div>
-              <h3 className="portfolio-card-title">App Dashboard</h3>
+              <h3 className="portfolio-card-title">Work With US</h3>
               <p className="portfolio-card-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
+                Work With Us es el portal oficial de empleo para Proquinal, miembro de Spradling Group, creado para ...
               </p>
-              <a href="/ux-ui/sistema-de-landings" className="portfolio-link">
-                Explorar proyecto <span className="arrow">↗</span>
+              <a href="/ux-ui/work-with-us" className="portfolio-link">
+                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector"/>
               </a>
             </div>
 
             <div className="portfolio-card">
               <div className="portfolio-image">
-                <img src="/imagen5.png" alt="Easy Rent project" />
+                <img src="../images/Diseño-UX-UI/Medical-Films-Solutions/Diseño UX UI-Medical Films Solutions.jpg" alt="Easy Rent project" />
               </div>
-              <h3 className="portfolio-card-title">Easy Rent</h3>
+              <h3 className="portfolio-card-title">Medical Films Solutions</h3>
               <p className="portfolio-card-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
+                En este proyecto desarrollé una landing page estratégica para el lanzamiento de Medical Films Solutions ...
               </p>
               <a href="#" className="portfolio-link">
-                Explorar proyecto <span className="arrow">↗</span>
+                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector"/>
               </a>
             </div>
           </div>
