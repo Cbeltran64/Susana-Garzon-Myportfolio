@@ -22,7 +22,7 @@ export default function HomePage() {
 
   const handleDownloadCV = () => {
     const link = document.createElement("a")
-    link.href = "/document/RENTA2024.pdf"
+    link.href = "/document/Susana_Garzon_CV.pdf"
     link.download = "Susana_Garzon_CV.pdf"
     document.body.appendChild(link)
     link.click()
