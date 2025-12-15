@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { navData } from "../data/navData.ts"
 import "./Header.css"
@@ -26,7 +24,7 @@ const Header = () => {
       const sectionId = path.replace("/#", "")
       const element = document.getElementById(sectionId)
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" })
+        element.scrollIntoView({ block: "center", behavior: "smooth" })
       }
     } else {
       window.location.href = path

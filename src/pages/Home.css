@@ -9,8 +9,8 @@
 .home-page main,
 .home-page section {
   max-width: none !important;
-  padding: 80px !important;
-  margin: 20 !important;
+  padding: 80px 40px !important;
+  margin: 2px !important;
 }
 
 .home-page {
@@ -375,8 +375,10 @@
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
   border: 1px solid #e0e0e0;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .portfolio-card:hover {
@@ -416,9 +418,8 @@
 
 .portfolio-image {
   width: 100%;
-  height: 240px;
+  height: 220px;
   overflow: hidden;
-  background: #f0f0f0;
 }
 
 .portfolio-image img {
@@ -439,9 +440,10 @@
   line-height: 1.6;
   color: #666;
   padding: 0 24px 16px;
+  flex-grow: 1;
 }
-
 .portfolio-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -453,16 +455,43 @@
   transition: color 0.3s;
 }
 
-.portfolio-link:hover {
-  color: #5e3bee;
+.portfolio-link::after {
+  content: "";
+  position: absolute;
+  left: 24px;          /* alinea con el texto */
+  bottom: 16px;
+  width: calc(100% - 48px);
+  height: 2px;
+  background-color: #5E3BEE;
+
+  transform: scaleX(0); 
+  transition: transform 0.3s ease;  /* visible por defecto */
+  transform-origin: left;
+}
+
+.portfolio-link:hover::after {
+  transform: scaleX(1);
 }
 
 /* Contact Section */
 .contact-section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
   background: linear-gradient(135deg, #5E3BEE 0%);
   padding: 80px;
   position: relative;
-  overflow: visible; /* Permitir que las imágenes se salgan */
+  overflow: visible;
+}
+
+.contact-decoration-left,
+.contact-decoration-right {
+  overflow: hidden;
+  height: 100%;
 }
 
 /* Imagen decorativa izquierda - alineada a la izquierda del article */
@@ -470,14 +499,10 @@
   position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
+  max-height: 100%;
   z-index: 0;
   pointer-events: none;
-}
-
-.contact-decoration-left img {
-  width: auto;
-  height: auto; /* Ajusta el tamaño según necesites */
-  display: block;
 }
 
 /* Imagen decorativa derecha - alineada abajo-derecha, sobresale arriba */
@@ -485,17 +510,19 @@
   position: absolute;
   bottom: 0;
   right: 0;
+  height: 100%;
+  max-height: 100%;
   z-index: 0;
   pointer-events: none;
-  max-height: 920px;
-  max-width: 990px;
 }
 
+.contact-decoration-left img,
 .contact-decoration-right img {
+  height: 100%;
+  max-height: 100%;
   width: auto;
-  height: auto; /* Ajusta el tamaño según necesites */
+  object-fit: cover;
   display: block;
-  transform: translateY(-70px); /* Sobresale 50px por arriba, ajusta según necesites */
 }
 
 .contact-decoration-top {
@@ -543,6 +570,7 @@
 }
 
 .contact-content {
+  position: relative;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -550,6 +578,37 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
+
+  /* importante */
+  z-index: 1;
+}
+
+.contact-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 0.50px;
+  background:
+    linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #ffffff 50%,
+      #0F103F 50%,
+      #0F103F 100%
+    ),
+    linear-gradient(
+      to right,
+      #ffffff 0%,
+      #ffffff 50%,
+      #0F103F 0%,
+      #0F103F 100%
+    );
+  background-blend-mode: multiply;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .contact-info {
@@ -708,11 +767,13 @@
   .hero-section,
   .expertise-section,
   .about-section,
-  .portfolio-section,
   .contact-section {
-    padding: 60px 20px;
+    padding: 60px 20px !important;
   }
 
+  .portfolio-section {
+    padding: 20px !important;
+  }
   .hero-title {
     font-size: 28px;
   }

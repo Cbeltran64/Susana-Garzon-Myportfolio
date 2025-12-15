@@ -215,9 +215,9 @@ export default function HomePage() {
               <div className="portfolio-image">
                 <img src="../images/Diseño-UX-UI/Sistema-de-Landings/Diseño UX UI-Sistema de Landings.jpg" alt="Ahuse project" />
               </div>
-              <h3 className="portfolio-card-title">Valencia ™ Biosense Landing Page prototipo</h3>
+              <h3 className="portfolio-card-title">Valencia ™ Biosense</h3>
               <p className="portfolio-card-description">
-                Lo que comenzó como una landing puntual se convirtió en un sistema UX/UI escalable para gestionar más de 10 colecciones de telas en distintos mercados...
+                Lo que comenzó como una landing puntual se convirtió en un sistema UX/UI escalable para gestionar ...
               </p>
               <a href="/ux-ui/sistema-de-landings" className="portfolio-link">
                 Explorar proyecto <span className="arrow">↗</span>
@@ -255,20 +255,21 @@ export default function HomePage() {
 
       {/* Trabajemos juntos Section */}
       <article id="trabajemos-juntos" className="contact-section">
+        
         {/* Imagen decorativa izquierda */}
-        <div className="contact-decoration-left">
-          <img src="/images/home/contacto1.png" alt="" />
-        </div>
+          <div className="contact-decoration-left">
+            <img src="/images/home/contacto1.png" alt="" />
+          </div>
 
-        {/* Imagen decorativa derecha */}
-        <div className="contact-decoration-right">
-          <img src="/images/home/contacto4.png" alt="" />
-        </div>
+          {/* Imagen decorativa derecha */}
+          <div className="contact-decoration-right">
+            <img src="/images/home/contacto4.png" alt="" />
+          </div>
 
-        {/* Imagen decorativa de arriba */}
-        <div className="contact-decoration-top">
-          <img src="/images/home/contac33.png" alt="" />
-        </div>
+          {/* Imagen decorativa de arriba */}
+          <div className="contact-decoration-top">
+            <img src="/images/home/contac33.png" alt="" />
+          </div>
 
         <div className="contact-container">
           <div className="contact-content">
