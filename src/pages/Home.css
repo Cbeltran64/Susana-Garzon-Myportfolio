@@ -592,26 +592,6 @@
   inset: 0;
   border-radius: 20px;
   padding: 0.50px;
-  background:
-    linear-gradient(
-      to bottom,
-      #ffffff 0%,
-      #ffffff 50%,
-      #0F103F 50%,
-      #0F103F 100%
-    ),
-    linear-gradient(
-      to right,
-      #ffffff 0%,
-      #ffffff 50%,
-      #0F103F 0%,
-      #0F103F 100%
-    );
-  background-blend-mode: multiply;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
 }
 
 .contact-info {
