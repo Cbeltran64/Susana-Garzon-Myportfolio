@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { navData } from "../data/navData.ts"
+import { Link } from "react-router-dom";
 import "./Header.css"
 
 const Header = () => {
@@ -56,20 +57,20 @@ const Header = () => {
               <li key={item.id} className="navbar__item">
                 {item.items && item.items.length > 0 ? (
                   <>
-                    <button 
+                    <button
                       className="navbar__link"
                       onClick={() => toggleSubmenu(item.id)}
                     >
                       {item.title}
                       <span className="navbar__arrow">▾</span>
                     </button>
-                    
+
                     {/* Submenú desplegable */}
                     <ul className={`submenu ${activeSubmenu === item.id ? "submenu--open" : ""}`}>
                       {item.items.map((subitem) => (
                         <li key={subitem.slug} className="submenu__item">
-                          <button 
-                            className="submenu__link" 
+                          <button
+                            className="submenu__link"
                             onClick={() => handleNavClick(`/${subitem.slug}`)}
                           >
                             {subitem.title}
@@ -79,33 +80,27 @@ const Header = () => {
                     </ul>
                   </>
                 ) : (
-                  <button 
-                    className="navbar__link" 
-                    onClick={() => handleNavClick(item.path)}
-                  >
-                    {item.title}
-                  </button>
+                  item.id === "sobre-mi" ? (
+                    <Link to="/#sobre-mi" className="navban__link">{item.title}</Link>
+                  ) : (
+                    <button
+                      className="navbar__link"
+                      onClick={() => handleNavClick(item.path)}
+                    >
+                      {item.title}
+                    </button>
+                  )
                 )}
               </li>
             ))}
           </ul>
 
           {/* Botón CTA dentro del menú móvil */}
-          <button 
-            className="navbar__cta-button" 
-            onClick={() => handleNavClick("/#trabajemos-juntos")}
-          >
-            ¿Trabajamos juntos?
-          </button>
+          <Link to="/#trabajemos-juntos" className="navbar__cta-button navbar__cta-button--desktop"  >Trabajemos juntos</Link>
         </nav>
 
         {/* Botón CTA desktop (a la derecha) */}
-        <button 
-          className="navbar__cta-button navbar__cta-button--desktop" 
-          onClick={() => handleNavClick("/#trabajemos-juntos")}
-        >
-          ¿Trabajamos juntos?
-        </button>
+        <Link to="/#trabajemos-juntos" className="navbar__cta-button navbar__cta-button--desktop"  >Trabajemos juntos</Link>
       </div>
     </header>
   )

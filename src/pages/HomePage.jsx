@@ -1,8 +1,24 @@
 import { useState } from "react"
 import "./Home.css"
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function HomePage() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   const handleDownloadCV = () => {
     const link = document.createElement("a")
@@ -220,7 +236,7 @@ export default function HomePage() {
                 Lo que comenzó como una landing puntual se convirtió en un sistema UX/UI escalable para gestionar ...
               </p>
               <a href="/ux-ui/sistema-de-landings" className="portfolio-link">
-                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector"/>
+                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector" />
               </a>
             </div>
 
@@ -233,7 +249,7 @@ export default function HomePage() {
                 Work With Us es el portal oficial de empleo para Proquinal, miembro de Spradling Group, creado para ...
               </p>
               <a href="/ux-ui/work-with-us" className="portfolio-link">
-                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector"/>
+                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector" />
               </a>
             </div>
 
@@ -246,7 +262,7 @@ export default function HomePage() {
                 En este proyecto desarrollé una landing page estratégica para el lanzamiento de Medical Films Solutions ...
               </p>
               <a href="#" className="portfolio-link">
-                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector"/>
+                Explorar proyecto <img src="/images/home/Vector.png" alt="Vector" className="Vector" />
               </a>
             </div>
           </div>
@@ -255,21 +271,21 @@ export default function HomePage() {
 
       {/* Trabajemos juntos Section */}
       <article id="trabajemos-juntos" className="contact-section">
-        
+
         {/* Imagen decorativa izquierda */}
-          <div className="contact-decoration-left">
-            <img src="/images/home/contacto1.png" alt="" />
-          </div>
+        <div className="contact-decoration-left">
+          <img src="/images/home/contacto1.png" alt="" />
+        </div>
 
-          {/* Imagen decorativa derecha */}
-          <div className="contact-decoration-right">
-            <img src="/images/home/contacto4.png" alt="" />
-          </div>
+        {/* Imagen decorativa derecha */}
+        <div className="contact-decoration-right">
+          <img src="/images/home/contacto4.png" alt="" />
+        </div>
 
-          {/* Imagen decorativa de arriba */}
-          <div className="contact-decoration-top">
-            <img src="/images/home/contac33.png" alt="" />
-          </div>
+        {/* Imagen decorativa de arriba */}
+        <div className="contact-decoration-top">
+          <img src="/images/home/contac33.png" alt="" />
+        </div>
 
         <div className="contact-container">
           <div className="contact-content">
